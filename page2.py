@@ -62,6 +62,12 @@ class Page2(tk.Frame):
         input_host_ipaddr.pack(side=tk.LEFT, padx=10, pady=0)
 
         #-----------------------------------------------------------------
+         
+                # Create a new line
+        new_line_frame = tk.Frame(self)
+        new_line_frame.pack(pady=10, anchor=tk.W)
+
+        # ----------------------------------------------------------------
 
         # Radio buttons for command selection
         self.command_var = tk.StringVar()
