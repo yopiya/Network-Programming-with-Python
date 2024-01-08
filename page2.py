@@ -49,6 +49,19 @@ class Page2(tk.Frame):
         new_line_frame.pack(pady=5, anchor=tk.W)
 
         # ----------------------------------------------------------------
+                # Create a new line
+        new_line_frame = tk.Frame(self)
+        new_line_frame.pack(pady=10, anchor=tk.W)
+
+        #-----------------------------------------------------------------
+
+        label_inputipdevicerouter = tk.Label(new_line_frame, text="Input IP Device", font=("Helvetica", 10))
+        label_inputipdevicerouter.pack(side=tk.LEFT, padx=15, pady=0)
+
+        input_host_ipaddr = tk.Text(new_line_frame, width=20, height=1)
+        input_host_ipaddr.pack(side=tk.LEFT, padx=10, pady=0)
+
+        #-----------------------------------------------------------------
 
         # Radio buttons for command selection
         self.command_var = tk.StringVar()
@@ -201,7 +214,7 @@ class Page2(tk.Frame):
         # Create command to ssh router
         self.CSR = {
             'device_type': 'cisco_ios',
-            'ip': '10.1.1.1',
+            'ip': label_inputipdevicerouter,
             'username': 'admin',
             'password': 'dgt'
         }

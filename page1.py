@@ -44,6 +44,20 @@ class Page1(tk.Frame):
 
         # Create a new line
         new_line_frame = tk.Frame(self)
+        new_line_frame.pack(pady=10, anchor=tk.W)
+
+        #-----------------------------------------------------------------
+
+        label_inputipdevice = tk.Label(new_line_frame, text="Input IP Device", font=("Helvetica", 10))
+        label_inputipdevice.pack(side=tk.LEFT, padx=15, pady=0)
+
+        input_host_ipaddr = tk.Text(new_line_frame, width=20, height=1)
+        input_host_ipaddr.pack(side=tk.LEFT, padx=10, pady=0)
+
+        #-----------------------------------------------------------------
+
+        # Create a new line
+        new_line_frame = tk.Frame(self)
         new_line_frame.pack(pady=5, anchor=tk.W)
 
         # ----------------------------------------------------------------
@@ -66,7 +80,7 @@ class Page1(tk.Frame):
         # Entry widget for IP address (for ping command)
         self.ip_entry = tk.Entry(new_line_frame)
         self.ip_entry.pack(side=tk.LEFT, padx=10)
-        self.ip_entry.insert(0, "192.168.1.1")  # Default IP address
+        #self.ip_entry.insert(0, "192.168.1.1")  # Default IP address
 
         # ----------------------------------------------------------------
 
@@ -199,7 +213,7 @@ class Page1(tk.Frame):
         # Create command to ssh router
         self.CSR = {
             'device_type': 'cisco_ios',
-            'ip': '10.1.1.1',
+            'ip': input_host_ipaddr,
             'username': 'admin',
             'password': 'dgt'
         }
