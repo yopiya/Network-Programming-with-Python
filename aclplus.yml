@@ -1,0 +1,30 @@
+---
+- name: Define Parameters
+  hosts: all
+  gather_facts: no
+  connection: network_cli
+  tasks:
+    - name: Load new acl into device acl1
+      ios_config:
+        lines:
+          - 10 permit ip host 192.168.100.1 any log
+          - 20 permit ip host 192.168.200.1 any log
+          - 30 permit ip host 192.168.3.1 any log
+        parents: ip access-list extended test
+        before: no ip access-list extended test
+        match: exact
+
+    - name: Show ACLs and Save to File
+      ios_command:
+        commands:
+          - show access-lists test
+      register: acl_show_result
+
+    - name: Show result in command line
+      debug:
+        var: acl_show_result.stdout_lines
+
+    - name: Save ACLs to File
+      copy:
+        content: "{{ acl_show_result.stdout[0] }}"
+        dest: "./access-list_{{ inventory_hostname }}.txt"

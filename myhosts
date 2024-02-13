@@ -1,0 +1,8 @@
+[routers]
+R1 ansible_host=192.168.37.145 ansible_network_os=ios
+R2 ansible_host=192.168.37.146 ansible_network_os=ios
+R3 ansible_host=192.168.37.147 ansible_network_os=ios
+
+[routers:vars]
+ansible_user=dgt
+ansible_password=dgt

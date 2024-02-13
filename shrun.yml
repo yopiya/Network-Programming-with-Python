@@ -1,0 +1,17 @@
+---
+- name: Save running configuration for each router
+  hosts: all
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Run show running-config command
+      ios_command:
+        commands:
+          - show running-config
+      register: command_output
+
+    - name: Save Output to File
+      copy:
+        content: "{{ command_output.stdout[0] }}"
+        dest: "./show_running_config_{{ inventory_hostname }}.txt"

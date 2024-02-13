@@ -1,0 +1,33 @@
+---
+- name: Configure ACL on Cisco Router
+  hosts: all
+  gather_facts: no
+  connection: network_cli
+  become: yes
+  become_method: enable
+
+  tasks:
+    - name: Create internal ACL 
+      ios_config:
+        lines:
+          - "access-list 10 deny 192.168.4.0 0.0.0.255"
+          - "access-list 10 permit any"
+      when: inventory_hostname == 'routers'
+
+    - name: Config inbound interface can't go to outside
+      ios_config:
+        lines:
+          - "interface FastEthernet0/0"
+          - "ip access-group 10 out"
+        when: inventory_hostname == 'routers'
+
+    - name: Show ACLs and Save to File
+      ios_command:
+        commands:
+          - show access-lists test
+      register: acl_show_result
+
+    - name: Save ACLs to File
+      copy:
+        content: "{{ acl_show_result.stdout[0] }}"
+        dest: access-list-config.txt

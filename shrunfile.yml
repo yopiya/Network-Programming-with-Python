@@ -1,0 +1,24 @@
+---
+- name: Save interface config
+  hosts: all
+  gather_facts: false
+  connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: run multiple commands
+      block:
+        - name: Run cli_command
+          ansible.netcommon.cli_command:
+            command: show ip int br
+          register: print_output
+
+    - name: Show ACLs and Save to File
+      ios_command:
+        commands:
+          - show running
+      register: acl_show_result
+
+    - name: Save ACLs to File
+      copy:
+        content: "{{ acl_show_result.stdout[0] }}"
+        dest: showrun.txt
